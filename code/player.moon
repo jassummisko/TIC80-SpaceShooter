@@ -10,20 +10,22 @@ class Plr extends Entity
 	wpn: weapons.Bullet
 	score: 0
 	health: 1
+	ammo: {
+		Yellow: 0
+		Blue: 0
+		Green: 0
+	}
 
 	update: =>
 		@controls!
-		if @cooldown > 0
-			@cooldown -= 1
+		@cooldown -= 1 if @cooldown > 0
 
 		fuelCols = {colors.LightRed, colors.DarkYellow, colors.Gray}
 		for i=1, 2
 			add(particles, Particle(@x, @y+4, 160+rnd(40), rnd(1, 3)/2, fuelCols[rnd(#fuelCols)], rnd(10, 30)))
 
 		@collision!
-
-		if @health <= 0
-			@die!
+		@die! if @health <= 0
 
 	controls: =>
 		if btn(0)

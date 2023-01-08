@@ -10,6 +10,7 @@ include "code.globals"
 include "code.utils"
 include "code.particles"
 include "code.entity"
+include "code.items"
 include "code.projectiles"
 include "code.player"
 

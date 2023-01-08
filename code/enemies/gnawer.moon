@@ -63,3 +63,5 @@ class Gnawer extends Enemy
 			dir = rnd(0, 360)
 			life = rnd(10, 40)
 			add(particles, Scrap(@x+4, @y+4, dir, 0, colors.DarkYellow, life))
+		for i=1, rnd 3, 10
+			add objs, YellowAmmo plr, @x, @y

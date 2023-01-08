@@ -32,6 +32,7 @@ do --enums
 		boom: 1
 		hit: 2
 		laser: 3
+		pickUp: 4
 	}
 
 	export types = {
@@ -39,6 +40,7 @@ do --enums
 		Enemy: 2
 		Projectile: 3
 		EnemyProjectile: 4
+		Item: 5
 	}
 	types.None = 0
 
