@@ -22,42 +22,45 @@ class Plr extends Entity
 
 		fuelCols = {colors.LightRed, colors.DarkYellow, colors.Gray}
 		for i=1, 2
-			add(particles, Particle(@x, @y+4, 160+rnd(40), rnd(1, 3)/2, fuelCols[rnd(#fuelCols)], rnd(10, 30)))
+			add particles, 
+				Particle @x, @y+4, (160+rnd 40), (rnd 1, 3)/2, fuelCols[rnd #fuelCols ], (rnd 10, 30)
 
 		@collision!
 		@die! if @health <= 0
 
+	draw: => 
+		super!
+
 	controls: =>
-		if btn(0)
-			@y = max(@y-@speed, 8)
-		if btn(1)
-			@y = min(@y+@speed, scr.height-16)
-		if btn(2)
-			@x = max(@x-@speed, 0)
-		if btn(3)
-			@x = min(@x+@speed, scr.width-16)
-		if btn(4)
+		if btn 0
+			@y = max @y-@speed, 8
+		if btn 1
+			@y = min @y+@speed, scr.height-16
+		if btn 2
+			@x = max @x-@speed, 0
+		if btn 3
+			@x = min @x+@speed, scr.width-16
+		if btn 4
 			@shoot!
 
 	shoot: =>
 		switch @wpn 
 			when weapons.Bullet
-				bullet = Bullet(@x+16, @y)
+				bullet = Bullet @x+16, @y
 				if @cooldown == 0
 					@cooldown = bullet.cooldown
-					sfx(bullet.sfx, 24, 120, 1)
-					add(objs, bullet)
+					sfx bullet.sfx, 24, 120, 1
+					add objs, bullet
 
 	die: =>
 		sfx(sounds.boom, 0, 120, 0)
 		for i=1, 15
 			dir = rnd(0, 360)
 			life = rnd(10, 40)
-			add(particles, Scrap(@x+8, @y+4, dir, 0, colors.Gray, life))
+			add particles, (Scrap @x+8, @y+4, dir, 0, colors.Gray, life)
 		@alive = false
 
-	damage: (amt) =>
-		@health -= amt
+	damage: (amt) => @health -= amt
 
 	collision: =>
 		for obj in *objs

@@ -21,6 +21,12 @@ include "code.enemies.patrolPew"
 
 include "code.waves"
 
+_DRAWGUI=->
+	--PLR AND SCR ARE GLOBAL
+	rectb(0, 0, scr.width, scr.height, 12)
+	printShadow("Score: "..plr.score, 4, 4, 8, 12)
+	printShadow("PRESS CTRL-R TO RESTART", 60, scr.height/2-4, 8, 12) if not plr.alive
+
 export BOOT=->
 	export plr = Plr!
 	add objs, plr
@@ -53,10 +59,7 @@ export _DRAW=->
 	drawAll(particles)
 	drawAll(objs)
 
-	rectb(0, 0, scr.width, scr.height, 12)
-	printShadow("Score: "..plr.score, 4, 4, 8, 12)
-
-	printShadow("PRESS CTRL-R TO RESTART", 60, scr.height/2-4, 8, 12) if not plr.alive
+	_DRAWGUI!
 		
 	if debug
 		print("Objects: "..#objs, 4, 16, 12)

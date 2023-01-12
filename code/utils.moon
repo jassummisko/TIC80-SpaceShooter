@@ -14,6 +14,7 @@ do --table functions
 			if tab[i].type == typ
 				return true
 		return false
+
 do --math functions
 	export max = math.max
 	export min = math.min
@@ -23,6 +24,7 @@ do --math functions
 	export rnd = math.random
 	export abs = math.abs
 	export flr = math.floor
+	
 do --utilities
 	export unpack = table.unpack
 	export printShadow = (...) ->
