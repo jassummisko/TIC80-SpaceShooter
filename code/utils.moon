@@ -21,6 +21,7 @@ do --math functions
 	export sin = math.sin
 	export rad = math.rad
 	export cos = math.cos
+	export rad = math.rad
 	export rnd = math.random
 	export abs = math.abs
 	export flr = math.floor
@@ -35,8 +36,8 @@ do --utilities
 		colShadow = args[4]
 		colText = args[5]
 
-		print(text, x+1, y+1, colShadow)
-		print(text, x, y, colText)
+		print text, x+1, y+1, colShadow
+		print text, x, y, colText
 	export collide = (o1, o2) ->
 		hit = false
 
@@ -45,15 +46,13 @@ do --utilities
 		w2 = o2.w*tileSize
 		h1 = o1.h*tileSize
 		h2 = o2.h*tileSize
-		x1 = o1.x
-		x2 = o2.x
-		y1 = o1.y
-		y2 = o2.y
+		x1, x2 = o1.x, o2.x
+		y1, y2 = o1.y, o2.y
 
 		xs = w1/2 + w2/2
 		ys = h1/2 + h2/2
-		xd = abs( (x1 + w1/2) - (x2 + w2/2) )
-		yd = abs( (y1 + h1/2) - (y2 + h2/2) )
+		xd = abs (x1 + w1/2) - (x2 + w2/2) 
+		yd = abs (y1 + h1/2) - (y2 + h2/2) 
 
 		if xd<xs and yd<ys then
 			hit = true

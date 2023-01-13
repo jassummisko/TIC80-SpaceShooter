@@ -9,8 +9,8 @@ class Particle
 		@life = @life or life or 60
 		@alive = true
 	update: =>
-		@x += math.cos(math.rad(@dir)) * @speed
-		@y += math.sin(math.rad(@dir)) * @speed
+		@x += (cos rad @dir) * @speed
+		@y += (sin rad @dir) * @speed
 		@life -= 1
 		if @life < 0
 			@alive = false

@@ -45,5 +45,7 @@ do --enums
 	types.None = 0
 
 	export weapons = {
-		Bullet: 1
+		Bullet: 0
+		Bolt: 1
+		Bomb: 2
 	}

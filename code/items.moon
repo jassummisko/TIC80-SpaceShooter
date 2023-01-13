@@ -29,7 +29,6 @@ class AmmoDrop extends Item
     spawnMove: =>
 		@x += (@spawnTargetOffsetX - @x) * 0.05 
 		@y += (@spawnTargetOffsetY - @y) * 0.05 
-        
 
     collision: =>
 		for obj in *objs
@@ -37,7 +36,7 @@ class AmmoDrop extends Item
 				if collide(obj, self)
 					@kill!
                     sfx sounds.pickUp
-                    obj.ammo[@ammoType] += 5
+                    obj.ammo[@ammoType] = min obj.ammo[@ammoType]+5, 400
 
 	moveTowardsPlayer: =>
         targetX = @target.x + (@target.w*8)/2 -- get center of target
@@ -51,12 +50,16 @@ class AmmoDrop extends Item
 
 class YellowAmmo extends AmmoDrop
     ammoType: "Yellow"
-    color: 4
+    color: colors.LightYellow
 
 class BlueAmmo extends AmmoDrop
     ammoType: "Blue"
-    color: 9
+    color: colors.LightBlue
 
 class GreenAmmo extends AmmoDrop
     ammoType: "Green"
-    color: 6
+    color: colors.LightGreen
+
+class RedAmmo extends AmmoDrop
+	ammoType: "Red"
+	color: colors.LightRed

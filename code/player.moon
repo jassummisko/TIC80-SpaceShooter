@@ -8,12 +8,18 @@ class Plr extends Entity
 	h: 1
 	cooldown: 0
 	wpn: weapons.Bullet
+	wpns: {
+		[0]: weapons.Bullet
+		[1]: weapons.Bolt
+		[2]: weapons.Bomb
+	}
 	score: 0
 	health: 1
 	ammo: {
 		Yellow: 0
 		Blue: 0
 		Green: 0
+		Red: 0
 	}
 
 	update: =>
@@ -23,7 +29,8 @@ class Plr extends Entity
 		fuelCols = {colors.LightRed, colors.DarkYellow, colors.Gray}
 		for i=1, 2
 			add particles, 
-				Particle @x, @y+4, (160+rnd 40), (rnd 1, 3)/2, fuelCols[rnd #fuelCols ], (rnd 10, 30)
+				Particle @x, @y+4, (160+rnd 40), (rnd 1, 3)/2, 
+					fuelCols[rnd #fuelCols], (rnd 10, 30)
 
 		@collision!
 		@die! if @health <= 0
@@ -42,6 +49,9 @@ class Plr extends Entity
 			@x = min @x+@speed, scr.width-16
 		if btn 4
 			@shoot!
+		if btnp 5
+			@wpn = (@wpn + 1) % (#@wpns+1)
+
 
 	shoot: =>
 		switch @wpn 
@@ -51,6 +61,27 @@ class Plr extends Entity
 					@cooldown = bullet.cooldown
 					sfx bullet.sfx, 24, 120, 1
 					add objs, bullet
+			
+			when weapons.Bolt
+				bullet = Bolt @x+16, @y
+				if @cooldown == 0 	
+					@cooldown = bullet.cooldown
+					if @ammo.Yellow >= 3
+						sfx bullet.sfx, 24, 120, 1
+						add objs, bullet
+						@ammo.Yellow -= 3
+					else 
+						for i=1, rnd 0, 1
+							add particles, 
+								Particle @x+@w*8, @y+4, (20 - rnd 40), 
+									(rnd 1, 3), colors.LightYellow, (rnd 10, 30)
+
+			when weapons.Bomb
+				bullet = Bomb @x+16, @y
+				if @cooldown == 0
+					@cooldown = bullet.cooldown
+					add objs, bullet
+
 
 	die: =>
 		sfx(sounds.boom, 0, 120, 0)
