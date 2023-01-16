@@ -1,4 +1,3 @@
-debug = false
 t = 0
 scr = {
 	width: 240

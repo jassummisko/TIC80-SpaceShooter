@@ -6,6 +6,7 @@
 -- version: 0.1
 -- script:  moon
 
+include "code.debug"
 include "code.globals"
 include "code.utils"
 include "code.particles"
@@ -22,76 +23,11 @@ include "code.enemies.patrolPew"
 
 include "code.waves"
 
-_DRAWGUI=->
-	--PLR AND SCR ARE GLOBAL
-	rectb(0, 0, scr.width, scr.height, 12)
-	printShadow("Score: "..plr.score, 4, 4, 8, 12)
-	printShadow("PRESS CTRL-R TO RESTART", 60, scr.height/2-4, 8, 12) if not plr.alive
+include "code.collisions"
 
-	barSize = 40
+include "code.gui"
 
-	--- RED BAR
-	rect  80, 4, plr.ammo.Red/10, 6, colors.LightRed
-	rectb 80, 4, barSize, 6, colors.DarkRed
-
-	--- YELLOW BAR
-	rect  130, 4, plr.ammo.Yellow/10, 6, colors.LightYellow
-	rectb 130, 4, barSize, 6, colors.DarkYellow
-
-	--- BLUE BAR
-	rect  180, 4, plr.ammo.Blue/10, 6, colors.LightBlue
-	rectb 180, 4, barSize, 6, colors.DarkBlue
-
-export BOOT=->
-	export plr = Plr!
-	add objs, plr
-	
-export TIC=->
-	poke(0x3FFB,0)	-- remove cursor
-	t+=1
-
-	_UPDATE!
-	_DRAW!
-
-export doCollisions = (objs) ->
-	for i, obj1 in ipairs objs
-		for obj2 in *objs[i,]
-
-			--use "continue if" to override collision
-			--otherwise, do not use "continue if"
-
-			continue if doCollide obj1, Plr, obj2, Enemy, ->
-				obj1\kill!
-				obj2\kill!
-			
-			continue if doCollide obj1, Plr, obj2, Projectile, ->
-				if obj2.enemy
-					obj1\kill!
-					obj2\kill! 
-			
-			continue if doCollide obj1, Enemy, obj2, Bolt, ->
-				obj1\damage obj2.damageVal unless obj2.enemy
-
-			doCollide obj1, Enemy, obj2, Bomb, ->
-				obj2\explode! unless obj2.exploded
-				
-			continue if doCollide obj1, Enemy, obj2, Projectile, ->
-				unless obj2.enemy
-					obj1\damage obj2.damageVal
-					obj2\kill!
-
-			continue if doCollide obj1, Plr, obj2, AmmoDrop, ->
-				obj2\kill!
-				sfx sounds.pickUp
-				obj1.ammo[obj2.ammoType] = min obj1.ammo[obj2.ammoType]+5, 400 
-
-export _UPDATE=->
-	updateAll particles
-	updateAll objs
-	removeObjs particles
-	removeObjs objs
-	doCollisions objs
-
+export doStarfield = ->
 	if t%3 == 0 
 		px = scr.width
 		py = rnd(scr.height)
@@ -99,16 +35,30 @@ export _UPDATE=->
 		spd = rnd 3, 8
 		add particles, Star(px, py, dir, spd)
 
+export BOOT=->
+	export plr = Plr!
+	add objs, plr
+
+export UPDATE=->
+	updateAll particles
+	updateAll objs
+	removeObjs particles
+	removeObjs objs
+	doCollisions objs
+	doStarfield!
 	spawnWaves!	
 	
-export _DRAW=->
+export DRAW=->
 	cls 0
-	
 	drawAll(particles)
 	drawAll(objs)
-
 	_DRAWGUI!
-		
-	if debug
-		print("Objects: "..#objs, 4, 16, 12)
-		print("Particles: "..#particles, 4, 24, 12)
+	drawDebug! if debug	
+
+export TIC=->
+	poke(0x3FFB,0)	-- remove cursor
+	t+=1
+
+	UPDATE!
+	DRAW!
+
