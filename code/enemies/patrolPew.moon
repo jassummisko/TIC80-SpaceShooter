@@ -12,8 +12,8 @@ class PatrolPew extends Enemy
 		@targetX = @x
 		@x = scr.width
 		@spawning = true
-		@col1 = colors.DarkCyan
-		@col2 = colors.LightCyan
+		@col1 = colors.DarkBlue
+		@col2 = colors.LightBlue
 		@speed = 1
 		@dir = 1
 
@@ -24,7 +24,6 @@ class PatrolPew extends Enemy
 		@blink = max(0, @blink-1)
 
 		@move!
-		@collision!
 
 		if @health <= 0
 			@die!
@@ -61,7 +60,9 @@ class PatrolPew extends Enemy
 		for i=1, 20
 			dir = rnd(0, 360)
 			life = rnd(10, 40)
-			add(particles, Scrap(@x+4, @y+4, dir, 0, colors.DarkRed, life))
+			add(particles, Scrap(@x+4, @y+4, dir, 0, colors.DarkBlue, life))
+
+		add objs, BlueAmmo plr, @x, @y for i=1, rnd(3, 9)
 
 	attack: =>
 		sfx(sounds.laser)

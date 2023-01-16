@@ -14,30 +14,39 @@ do --table functions
 			if tab[i].type == typ
 				return true
 		return false
+	export unpack = table.unpack
+
+do --class functions
+	export inheritsFrom = (obj, cls) ->
+		result = false
+		return true if obj.__class == cls
+		c = obj.__class
+		while c.__parent != nil
+			if c.__parent == cls
+				result = true
+				break
+			c = c.__parent
+		result
+
+	export doCollide = (obj1, c1, obj2, c2, func) ->
+		cond1 = (inheritsFrom obj1, c1) and (inheritsFrom obj2, c2)
+		cond2 = (inheritsFrom obj1, c2) and (inheritsFrom obj2, c1) 
+		if cond1 or cond2
+			func!
+			return true
+		return false
 
 do --math functions
-	export max = math.max
-	export min = math.min
-	export sin = math.sin
-	export rad = math.rad
-	export cos = math.cos
-	export rad = math.rad
+	_G[k] = v for k, v in pairs math
 	export rnd = math.random
-	export abs = math.abs
 	export flr = math.floor
 	
 do --utilities
 	export unpack = table.unpack
-	export printShadow = (...) ->
-		args = {...}
-		text = args[1]
-		x = args[2]
-		y = args[3]
-		colShadow = args[4]
-		colText = args[5]
-
+	export printShadow = (text, x, y, colShadow, colText) ->
 		print text, x+1, y+1, colShadow
 		print text, x, y, colText
+
 	export collide = (o1, o2) ->
 		hit = false
 

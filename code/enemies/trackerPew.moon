@@ -23,7 +23,6 @@ class TrackerPew extends Enemy
 		@blink = max 0, @blink-1
 
 		@move!
-		@collision!
 
 		if @health <= 0
 			@die!
@@ -68,8 +67,7 @@ class TrackerPew extends Enemy
 			life = rnd(10, 40)
 			add particles, Scrap(@x+4, @y+4, dir, 0, colors.DarkRed, life)
 
-		for i=1, rnd(3, 9)
-			add objs, RedAmmo plr, @x, @y
+		add objs, RedAmmo plr, @x, @y for i=1, rnd(3, 9)
 
 	attack: =>
 		sfx sounds.laser

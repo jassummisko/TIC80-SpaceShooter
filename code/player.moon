@@ -1,4 +1,3 @@
---Player
 class Plr extends Entity
 	type: types.Player
 	speed: 2
@@ -7,19 +6,13 @@ class Plr extends Entity
 	w: 2
 	h: 1
 	cooldown: 0
-	wpn: weapons.Bullet
-	wpns: {
-		[0]: weapons.Bullet
-		[1]: weapons.Bolt
-		[2]: weapons.Bomb
-	}
+	wpn: 0
 	score: 0
 	health: 1
 	ammo: {
 		Yellow: 0
 		Blue: 0
-		Green: 0
-		Red: 0
+		Red: 400
 	}
 
 	update: =>
@@ -32,7 +25,6 @@ class Plr extends Entity
 				Particle @x, @y+4, (160+rnd 40), (rnd 1, 3)/2, 
 					fuelCols[rnd #fuelCols], (rnd 10, 30)
 
-		@collision!
 		@die! if @health <= 0
 
 	draw: => 
@@ -48,42 +40,11 @@ class Plr extends Entity
 		if btn 3
 			@x = min @x+@speed, scr.width-16
 		if btn 4
-			@shoot!
+			WEAPONS[@wpn](self)\shoot!
 		if btnp 5
-			@wpn = (@wpn + 1) % (#@wpns+1)
+			@wpn = (@wpn + 1) % (#WEAPONS+1)
 
-
-	shoot: =>
-		switch @wpn 
-			when weapons.Bullet
-				bullet = Bullet @x+16, @y
-				if @cooldown == 0
-					@cooldown = bullet.cooldown
-					sfx bullet.sfx, 24, 120, 1
-					add objs, bullet
-			
-			when weapons.Bolt
-				bullet = Bolt @x+16, @y
-				if @cooldown == 0 	
-					@cooldown = bullet.cooldown
-					if @ammo.Yellow >= 3
-						sfx bullet.sfx, 24, 120, 1
-						add objs, bullet
-						@ammo.Yellow -= 3
-					else 
-						for i=1, rnd 0, 1
-							add particles, 
-								Particle @x+@w*8, @y+4, (20 - rnd 40), 
-									(rnd 1, 3), colors.LightYellow, (rnd 10, 30)
-
-			when weapons.Bomb
-				bullet = Bomb @x+16, @y
-				if @cooldown == 0
-					@cooldown = bullet.cooldown
-					add objs, bullet
-
-
-	die: =>
+	kill: =>
 		sfx(sounds.boom, 0, 120, 0)
 		for i=1, 15
 			dir = rnd(0, 360)
@@ -92,10 +53,3 @@ class Plr extends Entity
 		@alive = false
 
 	damage: (amt) => @health -= amt
-
-	collision: =>
-		for obj in *objs
-			if obj.type == types.Enemy or obj.type == types.EnemyProjectile
-				if collide(obj, self)
-					@die!
-					obj\kill!

@@ -1,4 +1,3 @@
---Entities
 class Entity
 	type: types.None
 	new: (x, y, flip) =>

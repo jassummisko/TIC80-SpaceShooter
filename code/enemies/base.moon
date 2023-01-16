@@ -2,11 +2,10 @@ class Enemy extends Entity
 	type: types.Enemy
 	score: 0
 
-	collision: =>
-		for obj in *objs
-			if obj.type == types.Projectile
-				if collide(obj, self)
-					@damage(obj.damage)
+	damage: (amt) =>
+		sfx(sounds.hit, 0, 120, 0)
+		@blink = 2
+		@health -= amt
 
 	spawn: =>
 		if @spawning

@@ -12,6 +12,7 @@ include "code.particles"
 include "code.entity"
 include "code.items"
 include "code.projectiles"
+include "code.weapons"
 include "code.player"
 
 include "code.enemies.base"
@@ -38,7 +39,7 @@ _DRAWGUI=->
 	rectb 130, 4, barSize, 6, colors.DarkYellow
 
 	--- BLUE BAR
-	rect  180, 4, plr.ammo.Blue/10, 6, colors.Blue
+	rect  180, 4, plr.ammo.Blue/10, 6, colors.LightBlue
 	rectb 180, 4, barSize, 6, colors.DarkBlue
 
 export BOOT=->
@@ -52,11 +53,40 @@ export TIC=->
 	_UPDATE!
 	_DRAW!
 
+export doCollisions = (objs) ->
+	for i, obj1 in ipairs objs
+		for obj2 in *objs[i,]
+			if collide obj1, obj2
+
+				--use "continue if" to override collision
+				--otherwise, do not use "continue if"
+
+				continue if doCollide obj1, Plr, obj2, Enemy, ->
+					obj1\kill!
+					obj2\kill!
+				
+				continue if doCollide obj1, Plr, obj2, Projectile, ->
+					if obj2.enemy
+						obj1\kill!
+						obj2\kill! 
+				
+				continue if doCollide obj1, Enemy, obj2, Bolt, ->
+					obj1\damage obj2.damageVal unless obj2.enemy
+
+				doCollide obj1, Enemy, obj2, Bomb, ->
+					obj2\explode! unless obj2.exploded
+					
+				continue if doCollide obj1, Enemy, obj2, Projectile, ->
+					unless obj2.enemy
+						obj1\damage obj2.damageVal
+						obj2\kill!
+
 export _UPDATE=->
 	updateAll particles
 	updateAll objs
 	removeObjs particles
 	removeObjs objs
+	doCollisions objs
 
 	if t%3 == 0 
 		px = scr.width

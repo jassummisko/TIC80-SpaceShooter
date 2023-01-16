@@ -1,4 +1,3 @@
---Particles
 class Particle
 	new: (x, y, dir, speed, col, life) =>
 		@x = x

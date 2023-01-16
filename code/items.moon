@@ -10,7 +10,6 @@ class Item extends Entity
         @collision!
 
     collision: =>
-        
 
 class AmmoDrop extends Item
     ammoType: "Yellow"
@@ -55,10 +54,6 @@ class YellowAmmo extends AmmoDrop
 class BlueAmmo extends AmmoDrop
     ammoType: "Blue"
     color: colors.LightBlue
-
-class GreenAmmo extends AmmoDrop
-    ammoType: "Green"
-    color: colors.LightGreen
 
 class RedAmmo extends AmmoDrop
 	ammoType: "Red"

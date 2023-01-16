@@ -29,7 +29,6 @@ class Gnawer extends Enemy
 		@blink = max(0, @blink-1)
 
 		@move!
-		@collision!
 		@attack! if @frame > @attackTime
 		@die! if @health <= 0
 
@@ -49,12 +48,12 @@ class Gnawer extends Enemy
 
 	damage: (amt) =>
 		sfx(sounds.hit, 0, 120, 0)
+		@blink = 2
+		@health -= amt
 		for i=1, 2
 			dir = rnd(0, 360)
 			life = rnd(10, 40)
 			add(particles, Scrap(@x+4, @y+4, dir, 0, colors.White, life))
-		@blink = 2
-		@health -= amt
 
 	die: =>
 		super!
@@ -63,5 +62,5 @@ class Gnawer extends Enemy
 			dir = rnd(0, 360)
 			life = rnd(10, 40)
 			add(particles, Scrap(@x+4, @y+4, dir, 0, colors.DarkYellow, life))
-		for i=1, rnd 3, 10
-			add objs, YellowAmmo plr, @x, @y
+		
+		add objs, YellowAmmo plr, @x, @y for i=1, rnd 3, 10

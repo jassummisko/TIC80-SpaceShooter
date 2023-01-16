@@ -33,6 +33,8 @@ do --enums
 		hit: 2
 		laser: 3
 		pickUp: 4
+		bolt: 5
+		spark: 6
 	}
 
 	export types = {
