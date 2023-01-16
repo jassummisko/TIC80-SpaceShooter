@@ -36,9 +36,3 @@ do --enums
 		bolt: 5
 		spark: 6
 	}
-
-	export weapons = {
-		Bullet: 0
-		Bolt: 1
-		Bomb: 2
-	}
