@@ -1,5 +1,4 @@
 class Enemy extends Entity
-	type: types.Enemy
 	score: 0
 
 	damage: (amt) =>

@@ -9,11 +9,6 @@ do --table functions
 		for i=#tab, 1, -1
 			if tab[i].alive == false
 				pop(tab, i)
-	export containsType = (tab, typ) ->
-		for i=#tab, 1, -1
-			if tab[i].type == typ
-				return true
-		return false
 	export unpack = table.unpack
 
 do --class functions
@@ -29,11 +24,18 @@ do --class functions
 		result
 
 	export doCollide = (obj1, c1, obj2, c2, func) ->
-		cond1 = (inheritsFrom obj1, c1) and (inheritsFrom obj2, c2)
-		cond2 = (inheritsFrom obj1, c2) and (inheritsFrom obj2, c1) 
-		if cond1 or cond2
-			func!
-			return true
+		if collide obj1, obj2
+			cond1 = (inheritsFrom obj1, c1) and (inheritsFrom obj2, c2)
+			cond2 = (inheritsFrom obj1, c2) and (inheritsFrom obj2, c1) 
+			if cond1 or cond2
+				func!
+				return true
+			return false
+
+	export containsType = (tab, typ) ->
+		for i=#tab, 1, -1
+			if inheritsFrom tab[i], typ
+				return true
 		return false
 
 do --math functions

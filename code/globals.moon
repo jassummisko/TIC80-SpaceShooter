@@ -37,15 +37,6 @@ do --enums
 		spark: 6
 	}
 
-	export types = {
-		Player: 1
-		Enemy: 2
-		Projectile: 3
-		EnemyProjectile: 4
-		Item: 5
-	}
-	types.None = 0
-
 	export weapons = {
 		Bullet: 0
 		Bolt: 1

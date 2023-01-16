@@ -1,5 +1,4 @@
 class Projectile extends Entity
-	type: types.Projectile
 	damageVal: 0
 	cooldown: 0
 	speed: 0

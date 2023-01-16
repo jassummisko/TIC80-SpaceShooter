@@ -1,7 +1,5 @@
 class Entity
-	type: types.None
 	new: (x, y, flip) =>
-		@type = @type or types.None
 		@x = x or 60
 		@y = y or scr.height/2
 		@flip = flip or false

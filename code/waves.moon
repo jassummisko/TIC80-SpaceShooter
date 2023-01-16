@@ -27,7 +27,7 @@ waves = {
 }	
 
 export spawnWaves = ->
-	unless containsType objs, types.Enemy
+	unless containsType objs, Enemy
 		waveDelay -= 1
 		if waveDelay <= 0
 			waves[rnd(#waves)]!

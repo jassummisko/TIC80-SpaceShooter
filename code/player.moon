@@ -1,5 +1,4 @@
 class Plr extends Entity
-	type: types.Player
 	speed: 2
 	spr: 256
 	alpha: 1

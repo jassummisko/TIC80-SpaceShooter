@@ -1,5 +1,4 @@
 class Item extends Entity
-	type: types.Item
 	new: (target, ...) =>
 		super ...
 		@target = target
@@ -28,14 +27,6 @@ class AmmoDrop extends Item
     spawnMove: =>
 		@x += (@spawnTargetOffsetX - @x) * 0.05 
 		@y += (@spawnTargetOffsetY - @y) * 0.05 
-
-    collision: =>
-		for obj in *objs
-			if obj.type == types.Player
-				if collide(obj, self)
-					@kill!
-                    sfx sounds.pickUp
-                    obj.ammo[@ammoType] = min obj.ammo[@ammoType]+5, 400
 
 	moveTowardsPlayer: =>
         targetX = @target.x + (@target.w*8)/2 -- get center of target
