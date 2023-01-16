@@ -6,3 +6,6 @@
 /zhmup
 /zhmup.binary
 /zhmup.exe
+compiled.moon
+compiled.tic
+.gitignore
