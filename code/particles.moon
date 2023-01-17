@@ -28,4 +28,4 @@ class Scrap extends Particle
 		@y += math.sin(math.rad(@dir)) * @speed
 		@life -= 1
 		if @life < 0
-			delObj(particles, self)
+			delObj(Particles, self)

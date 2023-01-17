@@ -1,5 +1,5 @@
 debug = false
 export drawDebug = ->
-	print("Objects: "..#objs, 4, 16, 12)
-	print("Particles: "..#particles, 4, 24, 12)
+	print("Objects: "..#Objs, 4, 16, 12)
+	print("Particles: "..#Particles, 4, 24, 12)
 

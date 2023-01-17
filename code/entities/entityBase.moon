@@ -1,7 +1,7 @@
 class Entity
 	new: (x, y, flip) =>
 		@x = x or 60
-		@y = y or scr.height/2
+		@y = y or SCR.height/2
 		@flip = flip or false
 		@alpha = @alpha or 0
 		@rot = 0

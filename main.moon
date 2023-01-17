@@ -10,16 +10,16 @@ include "code.debug"
 include "code.globals"
 include "code.utils"
 include "code.particles"
-include "code.entity"
-include "code.items"
-include "code.projectiles"
+include "code.entities.entityBase"
+include "code.entities.items"
+include "code.entities.projectiles"
 include "code.weapons"
-include "code.player"
+include "code.entities.player"
 
-include "code.enemies.base"
-include "code.enemies.gnawer"
-include "code.enemies.trackerPew"
-include "code.enemies.patrolPew"
+include "code.entities.enemies.enemyBase"
+include "code.entities.enemies.gnawer"
+include "code.entities.enemies.trackerPew"
+include "code.entities.enemies.patrolPew"
 
 include "code.waves"
 
@@ -29,29 +29,29 @@ include "code.gui"
 
 export doStarfield = ->
 	if t%3 == 0 
-		px = scr.width
-		py = rnd(scr.height)
+		px = SCR.width
+		py = rnd(SCR.height)
 		dir = 180
 		spd = rnd 3, 8
-		add particles, Star(px, py, dir, spd)
+		add Particles, Star(px, py, dir, spd)
 
 export BOOT=->
 	export plr = Plr!
-	add objs, plr
+	add Objs, plr
 
 export UPDATE=->
-	updateAll particles
-	updateAll objs
-	removeObjs particles
-	removeObjs objs
-	doCollisions objs
+	updateAll Particles
+	updateAll Objs
+	removeObjs Particles
+	removeObjs Objs
+	doCollisions Objs
 	doStarfield!
 	spawnWaves!	
 	
 export DRAW=->
 	cls 0
-	drawAll(particles)
-	drawAll(objs)
+	drawAll(Particles)
+	drawAll(Objs)
 	_DRAWGUI!
 	drawDebug! if debug	
 
@@ -61,4 +61,3 @@ export TIC=->
 
 	UPDATE!
 	DRAW!
-

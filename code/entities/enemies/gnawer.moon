@@ -13,8 +13,8 @@ class Gnawer extends Enemy
 		@targetX = @x
 		@spawning = true
 
-		@x = scr.width
-		@ycen = y or scr.height/2
+		@x = SCR.width
+		@ycen = y or SCR.height/2
 		@health = 6
 		@frame = 0
 		@bobSpeed = 3
@@ -33,34 +33,34 @@ class Gnawer extends Enemy
 		@die! if @health <= 0
 
 	draw: =>
-		if @blink > 0 pal(colors.DarkYellow, colors.White)
+		if @blink > 0 pal(COLORS.DarkYellow, COLORS.White)
 		spr(@spr, @x, @y, @alpha, 1, @flip, @rot, @w, @h)
-		pal(colors.DarkYellow, colors.DarkYellow)
+		pal(COLORS.DarkYellow, COLORS.DarkYellow)
 
 	move: =>
 		@spawn!
 		@y = @ycen + flr(30 * (sin(rad(@frame*@bobSpeed+@offset))))
 		@x -= @speed
-		@x = scr.width+16 if @x <= -16
+		@x = SCR.width+16 if @x <= -16
 
 	attack: =>
 		@speed = @attackSpeed
 
 	damage: (amt) =>
-		sfx(sounds.hit, 0, 120, 0)
+		sfx(SOUNDS.hit, 0, 120, 0)
 		@blink = 2
 		@health -= amt
 		for i=1, 2
 			dir = rnd(0, 360)
 			life = rnd(10, 40)
-			add(particles, Scrap(@x+4, @y+4, dir, 0, colors.White, life))
+			add(Particles, Scrap(@x+4, @y+4, dir, 0, COLORS.White, life))
 
 	die: =>
 		super!
-		sfx(sounds.boom, 0, 120, 0)
+		sfx(SOUNDS.boom, 0, 120, 0)
 		for i=1, 20
 			dir = rnd(0, 360)
 			life = rnd(10, 40)
-			add(particles, Scrap(@x+4, @y+4, dir, 0, colors.DarkYellow, life))
+			add(Particles, Scrap(@x+4, @y+4, dir, 0, COLORS.DarkYellow, life))
 		
-		add objs, YellowAmmo plr, @x, @y for i=1, rnd 3, 10
+		add Objs, YellowAmmo plr, @x, @y for i=1, rnd 3, 10

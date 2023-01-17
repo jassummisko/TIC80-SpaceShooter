@@ -4,7 +4,7 @@ registerWeapon = (wpn) -> add WEAPONS, wpn
 
 class Weapon
     projectile: Bullet
-	sfx: sounds.genericAttack
+	sfx: SOUNDS.genericAttack
     new: (user) =>
         @user = user
     
@@ -13,13 +13,13 @@ class Weapon
         if @user.cooldown <= 0
             @user.cooldown = bullet.cooldown
             sfx @sfx, 24, 120, 1
-            add objs, bullet
+            add Objs, bullet
 
 WEAPONS[0] = Weapon
 
 class WeaponBolt extends Weapon
     projectile: Bolt
-    sfx: sounds.bolt
+    sfx: SOUNDS.bolt
     
     shoot: =>
         bullet = (@projectile) @user.x+16, @user.y
@@ -27,14 +27,14 @@ class WeaponBolt extends Weapon
             @user.cooldown = bullet.cooldown
             if @user.ammo.Yellow >= 3
                 sfx @sfx, 32, 120, 1
-                add objs, bullet
+                add Objs, bullet
                 @user.ammo.Yellow -= 3
             else 
                 for i=1, rnd -1, 1
-                    add particles, 
+                    add Particles, 
                         Particle @user.x+@user.w*8, @user.y+4, (20 - rnd 40), 
-                            (rnd 1, 3), colors.LightYellow, (rnd 10, 30) for i=1, 4
-                    sfx sounds.spark
+                            (rnd 1, 3), COLORS.LightYellow, (rnd 10, 30) for i=1, 4
+                    sfx SOUNDS.spark
 
 class WeaponBomb extends Weapon
     projectile: Bomb
@@ -44,7 +44,7 @@ class WeaponBomb extends Weapon
         if @user.cooldown == 0
             if @user.ammo.Red >= 200
                 @user.cooldown = bullet.cooldown
-                add objs, bullet
+                add Objs, bullet
                 @user.ammo.Red -= 200
 
 registerWeapon WeaponBolt

@@ -1,14 +1,14 @@
 t = 0
-scr = {
+SCR = {
 	width: 240
 	height: 136
 }
 
-objs = {}
-particles = {}
+Objs = {}
+Particles = {}
 
 do --enums
-	export colors = {
+	export COLORS = {
 		TransBlack: 0
 		DarkPurple: 1
 		LightPurple: 7
@@ -26,7 +26,7 @@ do --enums
 		Gray: 13
 	}
 
-	export sounds = {
+	export SOUNDS = {
 		genericAttack: 0
 		boom: 1
 		hit: 2

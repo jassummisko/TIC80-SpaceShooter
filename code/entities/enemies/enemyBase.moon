@@ -2,7 +2,7 @@ class Enemy extends Entity
 	score: 0
 
 	damage: (amt) =>
-		sfx(sounds.hit, 0, 120, 0)
+		sfx(SOUNDS.hit, 0, 120, 0)
 		@blink = 2
 		@health -= amt
 

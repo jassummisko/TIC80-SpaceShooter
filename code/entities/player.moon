@@ -14,13 +14,13 @@ class Plr extends Entity
 		Red: 400
 	}
 
-	update: =>
+	update: (using COLORS) =>
 		@controls!
 		@cooldown -= 1 if @cooldown > 0
 
-		fuelCols = {colors.LightRed, colors.DarkYellow, colors.Gray}
+		fuelCols = {COLORS.LightRed, COLORS.DarkYellow, COLORS.Gray}
 		for i=1, 2
-			add particles, 
+			add Particles, 
 				Particle @x, @y+4, (160+rnd 40), (rnd 1, 3)/2, 
 					fuelCols[rnd #fuelCols], (rnd 10, 30)
 
@@ -29,26 +29,26 @@ class Plr extends Entity
 	draw: => 
 		super!
 
-	controls: =>
+	controls: (using WEAPONS) =>
 		if btn 0
 			@y = max @y-@speed, 8
 		if btn 1
-			@y = min @y+@speed, scr.height-16
+			@y = min @y+@speed, SCR.height-16
 		if btn 2
 			@x = max @x-@speed, 0
 		if btn 3
-			@x = min @x+@speed, scr.width-16
+			@x = min @x+@speed, SCR.width-16
 		if btn 4
 			WEAPONS[@wpn](self)\shoot!
 		if btnp 5
 			@wpn = (@wpn + 1) % (#WEAPONS+1)
 
 	kill: =>
-		sfx(sounds.boom, 0, 120, 0)
+		sfx(SOUNDS.boom, 0, 120, 0)
 		for i=1, 15
 			dir = rnd(0, 360)
 			life = rnd(10, 40)
-			add particles, (Scrap @x+8, @y+4, dir, 0, colors.Gray, life)
+			add Particles, (Scrap @x+8, @y+4, dir, 0, COLORS.Gray, life)
 		@alive = false
 
 	damage: (amt) => @health -= amt

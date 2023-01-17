@@ -40,12 +40,12 @@ class AmmoDrop extends Item
 
 class YellowAmmo extends AmmoDrop
     ammoType: "Yellow"
-    color: colors.LightYellow
+    color: COLORS.LightYellow
 
 class BlueAmmo extends AmmoDrop
     ammoType: "Blue"
-    color: colors.LightBlue
+    color: COLORS.LightBlue
 
 class RedAmmo extends AmmoDrop
 	ammoType: "Red"
-	color: colors.LightRed
+	color: COLORS.LightRed

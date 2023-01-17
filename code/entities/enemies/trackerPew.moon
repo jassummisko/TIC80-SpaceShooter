@@ -14,7 +14,7 @@ class TrackerPew extends Enemy
 		@attackTime = rnd(120, 240)
 		@targetY = plr.y
 		@targetX = @x
-		@x = scr.width
+		@x = SCR.width
 
 	update: =>
 		super!
@@ -33,17 +33,17 @@ class TrackerPew extends Enemy
 
 	draw: =>
 		if @blink > 0 
-			pal(colors.DarkRed, colors.White)
+			pal(COLORS.DarkRed, COLORS.White)
 		if @blink > 0 
-			pal(colors.LightRed, colors.White)
+			pal(COLORS.LightRed, COLORS.White)
 		spr(@spr, @x, @y, @alpha, 1, @flip, @rot, @w, @h)
-		pal(colors.DarkRed) 
-		pal(colors.LightRed)
+		pal(COLORS.DarkRed) 
+		pal(COLORS.LightRed)
 
 	move: =>
 		@spawn!
 
-		@targetY = max(2, min(plr.y, scr.height-16))
+		@targetY = max(2, min(plr.y, SCR.height-16))
 
 		if @moveTime <= 0
 			@y = math.floor(@y + ((@targetY - @y) * 0.2))
@@ -51,24 +51,24 @@ class TrackerPew extends Enemy
 				@moveTime = rnd(40, 120)
 
 	damage: (amt) =>
-		sfx(sounds.hit, 0, 120, 0)
+		sfx(SOUNDS.hit, 0, 120, 0)
 		for i=1, 2
 			dir = rnd(0, 360)
 			life = rnd(10, 40)
-			add(particles, Scrap(@x+4, @y+4, dir, 0, colors.White, life))
+			add(Particles, Scrap(@x+4, @y+4, dir, 0, COLORS.White, life))
 		@blink = 2
 		@health -= amt
 
 	die: =>
 		super!
-		sfx(sounds.boom, 0, 120, 0)
+		sfx(SOUNDS.boom, 0, 120, 0)
 		for i=1, 20
 			dir = rnd(0, 360)
 			life = rnd(10, 40)
-			add particles, Scrap(@x+4, @y+4, dir, 0, colors.DarkRed, life)
+			add Particles, Scrap(@x+4, @y+4, dir, 0, COLORS.DarkRed, life)
 
-		add objs, RedAmmo plr, @x, @y for i=1, rnd(3, 9)
+		add Objs, RedAmmo plr, @x, @y for i=1, rnd(3, 9)
 
 	attack: =>
-		sfx sounds.laser
-		add objs, Laser @x-2, @y+4, false, true
+		sfx SOUNDS.laser
+		add Objs, Laser @x-2, @y+4, false, true

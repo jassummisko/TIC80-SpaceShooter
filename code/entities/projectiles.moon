@@ -9,7 +9,7 @@ class Projectile extends Entity
 
 	update: =>
 		super!
-		@alive = false if (@x > scr.width+8) or (@x < -8)
+		@alive = false if (@x > SCR.width+8) or (@x < -8)
 
 class Bullet extends Projectile
 	speed: 5
@@ -47,7 +47,7 @@ class Laser extends Projectile
 	kill: =>
 		super!
 		for i=1, 15
-			add particles, Scrap @x, @y+4, rnd(-30, 30), 0, colors.LightRed, rnd(60)
+			add Particles, Scrap @x, @y+4, rnd(-30, 30), 0, COLORS.LightRed, rnd(60)
 
 class Bolt extends Projectile
 	speed: 7
@@ -85,9 +85,9 @@ class Bomb extends Projectile
 
 	explode: =>
 		for i=1, 200
-			add particles, 
+			add Particles, 
 				Particle @x+4, @y+4, (rnd 360), (rnd 5, 10), 
-					colors.LightRed, (rnd 10, 30) unless @exploded
+					COLORS.LightRed, (rnd 10, 30) unless @exploded
 
 		@exploded = true
 		@x, @y = 0, 0

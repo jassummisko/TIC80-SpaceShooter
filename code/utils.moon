@@ -44,7 +44,6 @@ do --math functions
 	export flr = math.floor
 	
 do --utilities
-	export unpack = table.unpack
 	export printShadow = (text, x, y, colShadow, colText) ->
 		print text, x+1, y+1, colShadow
 		print text, x, y, colText
